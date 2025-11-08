@@ -9,7 +9,7 @@ const Users = () => {
         <div>
             <div>
                 {/* Add User */}
-                <form>
+                <form onSubmit={handleUser}>
                     <input name='nameField' type="text" />
                     <br />
                     <input name='emailField' type="text" />
