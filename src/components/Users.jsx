@@ -23,12 +23,17 @@ const Users = ({ usersPromise }) => {
                 console.log('data  after creating in db', data)
                 if (data.insertedId) {
                     newUser._id = data.insertedId;
-                    const newUsers = [...users,newUser];
+                    const newUsers = [...users, newUser];
                     setUsers(newUsers);
                     alert('User added successfully');
                     e.target.reset();
                 }
             })
+    }
+
+    // Delete Operations 
+    const handleUserDelete = () => {
+        console.log("Delete this user");
     }
     return (
         <div>
@@ -46,7 +51,7 @@ const Users = ({ usersPromise }) => {
             {/* View Users Details */}
             <div>
                 {
-                    users.map(user => <p key={user._id}>{user.name}:{user.email}</p>)
+                    users.map(user => <p key={user._id}>{user.name} : {user.email} <button onClick={handleUserDelete}>X</button> </p>)
                 }
             </div>
         </div>
