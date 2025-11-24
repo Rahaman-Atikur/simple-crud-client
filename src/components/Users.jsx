@@ -1,4 +1,5 @@
 import React, { use, useState } from 'react';
+
 const Users = ({ usersPromise }) => {
     const initialUsers = use(usersPromise);
     const [users, setUsers] = useState(initialUsers);
@@ -32,12 +33,24 @@ const Users = ({ usersPromise }) => {
     }
 
     // Delete Operations 
-    const handleUserDelete = () => {
-        console.log("Delete this user");
+    const handleUserDelete = (id) => {
+        console.log("Delete this user",id);
+        fetch(`http://localhost:3000/users/${id}`,{
+            method:'DELETE'
+        }).then(res=>res.json()).then(data=>{
+            if(data.deletedCount){
+               const remainingUsers= users.filter(user=>user._id!==id);
+               setUsers(remainingUsers);
+            }
+        }
+            
+            // {console.log('after delete',data)}
+            )
     }
     return (
         <div>
             <div>
+                <h4>{users.length}</h4>
                 {/* Add User */}
                 <h1>Simple Crud Applications</h1>
                 <form onSubmit={handleUser}>
@@ -51,7 +64,7 @@ const Users = ({ usersPromise }) => {
             {/* View Users Details */}
             <div>
                 {
-                    users.map(user => <p key={user._id}>{user.name} : {user.email} <button onClick={handleUserDelete}>X</button> </p>)
+                    users.map(user => <p key={user._id}>{user.name} : {user.email} <button onClick={() => handleUserDelete(user._id)}>X</button> </p>)
                 }
             </div>
         </div>
